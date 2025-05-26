@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Departamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f7f9;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .modulo {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .modulo h2 {
+            color: #2980b9;
+        }
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1abc9c;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            color: #2c3e50;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #1abc9c;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Módulo: Departamento</h1>
+
+    <div class="modulo">
+        <h2>Consultar Departamento</h2>
+        <label for="codigoConsulta">Código del Departamento:</label>
+        <input type="text" id="codigoConsulta" placeholder="Ingrese el código">
+        <button onclick="consultarDepartamento()">Consultar</button>
+    </div>
+
+    <div class="modulo">
+        <h2>Modificar Departamento</h2>
+        <label for="codigoMod">Código del Departamento:</label>
+        <input type="text" id="codigoMod" placeholder="Ingrese el código actual">
+        <label for="nuevoNombre">Nuevo Nombre:</label>
+        <input type="text" id="nuevoNombre" placeholder="Ingrese el nuevo nombre">
+        <button onclick="modificarDepartamento()">Modificar</button>
+    </div>
+
+    <div id="resultado"></div>
+
+    <div class="modulo">
+        <a href="Principal.html">← Volver al menú principal</a>
+    </div>
+
+</body>
+</html>

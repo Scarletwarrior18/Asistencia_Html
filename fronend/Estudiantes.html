@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Estudiantes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f4f7f9; }
+        h1, h2 { color: #2c3e50; }
+        .modulo { margin-bottom: 30px; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .modulo h2 { color: #2980b9; }
+        button { display: table; width: 100%; margin: 8px 0; padding: 10px; background-color: #3498db; color: white; border: none; border-radius: 20px; font-size: 15px; cursor: pointer; }
+        button:hover { background-color: #1abc9c; }
+        input, select { width: 100%; padding: 8px; margin-top: 6px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        form { margin-top: 20px; }
+        a { text-decoration: none; color: #34495e; font-weight: bold; }
+        a:hover { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <h1>Módulo de Estudiantes</h1>
+
+    <div class="modulo">
+        <h2>Registro de Estudiante</h2>
+        <form>
+            <label>Nombre:</label>
+            <input type="text" placeholder="Ingrese nombre">
+
+            <label>Código:</label>
+            <input type="text" placeholder="Ingrese código">
+
+            <label>Tipo de documento:</label>
+            <input type="text" placeholder="Ingrese tipo de documento">
+
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+
+    <div class="modulo">
+        <h2>Consultas</h2>
+        <form>
+            <label>Código del estudiante a consultar:</label>
+            <input type="text" placeholder="Ingrese el código del estudiante">
+
+            <button type="button" onclick="alert('Consultar estudiante en departamento')">Consultar estudiante en departamento</button>
+        </form>
+    </div>
+
+    <div class="modulo">
+        <h2>Modificar Estudiante</h2>
+        <form>
+            <label>Código del estudiante a modificar:</label>
+            <input type="text" placeholder="Ingrese el código del estudiante">
+
+            <button type="button" onclick="alert('Consultar estudiante para modificar')">Consultar estudiante</button>
+
+            <div id="modificarEstudiante" style="display:none;">
+                <label>Nuevo nombre:</label>
+                <input type="text" placeholder="Ingrese nuevo nombre">
+
+                <label>Nuevo tipo de documento:</label>
+                <input type="text" placeholder="Ingrese nuevo tipo de documento">
+
+                <label>Nuevo número de documento:</label>
+                <input type="text" placeholder="Ingrese nuevo número de documento">
+
+                <button type="submit">Modificar estudiante</button>
+            </div>
+        </form>
+    </div>
+
+    <a href="index.html">« Volver al menú principal</a>
+
+</body>
+</html>

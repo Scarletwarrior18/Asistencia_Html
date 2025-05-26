@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Asistencia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 60px;
+      background-color: #f4f7f9;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    .form-section, .table-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      color: #34495e;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      background-color: #3498db;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #ecf0f1;
+      color: #2c3e50;
+    }
+
+    .estado {
+      font-weight: bold;
+    }
+
+    .AUSENTE { color: #e74c3c; }
+    .PRESENTE { color: #3498db; }
+    .TARDE { color: #f39c12; }
+
+    .cambiar-btn {
+      background-color: #f39c12;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .cambiar-btn:hover {
+      background-color: #d35400;
+    }
+
+    .guardar-btn {
+      background-color: #3498db;
+    }
+
+    .guardar-btn:hover {
+      background-color: #3498db;
+    }
+
+    .consultar-section {
+      background-color: #e8f6f3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gestión de Asistencia</h1>
+
+  <!-- Crear sesión -->
+  <div class="form-section">
+    <h2>1. Crear nueva sesión</h2>
+    <label>Fecha:
+      <input type="date" id="fechaSesion">
+    </label>
+    <label>Hora de Inicio:
+      <input type="time" id="horaInicio">
+    </label>
+    <label>Hora Final:
+      <input type="time" id="horaFinal">
+    </label>
+    <button onclick="crearSesion()">Crear Sesión</button>
+  </div>
+
+  <!-- Agregar estudiante -->
+  <div class="form-section">
+    <h2>2. Agregar estudiantes </h2>
+    <label>Código del estudiante:
+      <input type="text" id="codigoEstudiante">
+    </label>
+    <button onclick="agregarEstudiante()">Agregar</button>
+  </div>
+
+  <!-- Lista antes de guardar -->
+  <div class="table-section">
+    <h2>3. Lista de Asistencia</h2>
+    <table id="tablaAsistencia">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Estado</th>
+          <th>Cambiar Estado</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button class="guardar-btn" onclick="guardarSesion()">Guardar sesión</button>
+  </div>
+
+  <!-- Consultar sesión guardada -->
+  <div class="table-section consultar-section">
+    <h2>4. Consultar</h2>
+    <table id="tablaGuardada">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    let listaEstudiantes = [];
+    let listaGuardada = [];
+
+    function crearSesion() {
+      listaEstudiantes = [];
+      listaGuardada = [];
+      document.querySelector("#tablaAsistencia tbody").innerHTML = "";
+      document.querySelector("#tablaGuardada tbody").innerHTML = "";
+      alert("Sesión creada correctamente.");
+    }
+
+    function agregarEstudiante() {
+      const codigo = document.getElementById("codigoEstudiante").value.trim();
+      if (codigo === "") {
+        alert("Ingresa un código válido.");
+        return;
+      }
+
+      listaEstudiantes.push({ codigo, estado: "AUSENTE" });
+      actualizarTabla();
+      document.getElementById("codigoEstudiante").value = "";
+    }
+
+    function actualizarTabla() {
+      const tbody = document.querySelector("#tablaAsistencia tbody");
+      tbody.innerHTML = "";
+      listaEstudiantes.forEach((e, index) => {
+        const fila = `
+          <tr>
+            <td>${e.codigo}</td>
+            <td class="estado ${e.estado}">${e.estado}</td>
+            <td><button class="cambiar-btn" onclick="cambiarEstado(${index})">Cambiar a PRESENTE</button></td>
+          </tr>
+        `;
+        tbody.innerHTML += fila;
+      });
+    }
+
+    function cambiarEstado(index) {
+      if (listaEstudiantes[index].estado === "AUSENTE") {
+        listaEstudiantes[index].estado = "PRESENTE";
+        actualizarTabla();
+      }
+    }
+
+    function guardarSesion() {
+      listaGuardada = JSON.parse(JSON.stringify(listaEstudiantes));
+      actualizarTablaGuardada();
+      alert("Sesión guardada con éxito.");
+    }
+
+    function actualizarTablaGuardada() {
+      const tbody = document.querySelector("#tablaGuardada tbody");
+      tbody.innerHTML = "";
+      listaGuardada.forEach((e, index) => {
+        const fila = `
+          <tr>
+            <td>${e.codigo}</td>
+            <td class="estado ${e.estado === 'PRESENTE' ? 'PRESENTE' : 'AUSENTE'}">${e.estado}</td>
+            <td><button class="cambiar-btn" onclick="cambiarATarde(${index})">Cambiar a LLEGÓ TARDE</button></td>
+          </tr>
+        `;
+        tbody.innerHTML += fila;
+      });
+    }
+
+    function cambiarATarde(index) {
+      if (listaGuardada[index].estado !== "LLEGÓ TARDE") {
+        listaGuardada[index].estado = "LLEGÓ TARDE";
+        actualizarTablaGuardada();
+      }
+    }
+  </script>
+
+</body>
+</html>
+

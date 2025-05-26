@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Módulo de Asignaturas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f7f9;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .modulo {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .modulo h2 {
+            color: #2980b9;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #1abc9c;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+        }
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        a {
+            text-decoration: none;
+            color: #34495e;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>Módulo de Asignaturas</h1>
+
+    <div class="modulo">
+        <h2>Gestión de Asignaturas</h2>
+        <form>
+            <label for="nombreAsignatura">Nombre de la asignatura:</label>
+            <input type="text" id="nombreAsignatura" placeholder="Ingrese el nombre de la asignatura">
+
+            <label for="codigoAsignatura">Código de la asignatura:</label>
+            <input type="text" id="codigoAsignatura" placeholder="Ingrese el código de la asignatura">
+
+            <button type="button" onclick="agregarAsignatura()">Agregar asignatura</button>
+        </form>
+
+        <div class="resultado" id="resultadoAsignatura"></div>
+    </div>
+
+    <div class="modulo">
+        <h2>Gestión de Estudiantes en Asignaturas</h2>
+        <form>
+            <label for="nombreEstudiante">Nombre del estudiante:</label>
+            <input type="text" id="nombreEstudiante" placeholder="Ingrese el nombre del estudiante">
+
+            <label for="documentoEstudiante">Número de documento:</label>
+            <input type="text" id="documentoEstudiante" placeholder="Ingrese el número de documento">
+
+            <label for="codigoAsignaturaEst">Código de la asignatura:</label>
+            <input type="text" id="codigoAsignaturaEst" placeholder="Ingrese el código de la asignatura">
+
+            <button type="button" onclick="registrarEstudiante()">Registrar estudiante en asignatura</button>
+        </form>
+
+        <div class="resultado" id="resultadoEstudiante"></div>
+    </div>
+
+    <div class="modulo">
+        <h2>Consultas</h2>
+        <div class="modulo">
+    <h2>Consulta de estudiantes por asignatura</h2>
+    <label for="codigoConsulta">Código de la asignatura:</label>
+    <input type="text" id="codigoConsulta" placeholder="Ingrese el código de la asignatura">
+    <button onclick="consultarEstudiantes()">Consultar estudiantes</button>
+
+    <div class="resultado" id="resultadoConsultaEstudiantes"></div>
+</div>
+
+        <div class="resultado" id="resultadoConsulta"></div>
+    </div>
+
+    <div class="modulo">
+        <a href="Principal.html">Volver al menú principal</a>
+    </div>
+
+    <script>
+        let asignaturas = [];
+        let estudiantesPorAsignatura = {};
+
+        function agregarAsignatura() {
+            const nombre = document.getElementById("nombreAsignatura").value.trim();
+            const codigo = document.getElementById("codigoAsignatura").value.trim();
+
+            if (!nombre || !codigo) {
+                document.getElementById("resultadoAsignatura").innerText = "Debe ingresar ambos campos.";
+                return;
+            }
+
+            if (asignaturas.some(a => a.codigo === codigo)) {
+                document.getElementById("resultadoAsignatura").innerText = "El código ya existe.";
+                return;
+            }
+
+            asignaturas.push({ nombre, codigo });
+            estudiantesPorAsignatura[codigo] = [];
+            document.getElementById("resultadoAsignatura").innerText = `Asignatura '${nombre}' registrada con éxito.`;
+
+            document.getElementById("nombreAsignatura").value = "";
+            document.getElementById("codigoAsignatura").value = "";
+        }
+
+        function registrarEstudiante() {
+            const nombre = document.getElementById("nombreEstudiante").value.trim();
+            const documento = document.getElementById("documentoEstudiante").value.trim();
+            const codigoAsignatura = document.getElementById("codigoAsignaturaEst").value.trim();
+
+            if (!nombre || !documento || !codigoAsignatura) {
+                document.getElementById("resultadoEstudiante").innerText = "Debe llenar todos los campos.";
+                return;
+            }
+
+            if (!estudiantesPorAsignatura[codigoAsignatura]) {
+                document.getElementById("resultadoEstudiante").innerText = "La asignatura no existe.";
+                return;
+            }
+
+            const listaEstudiantes = estudiantesPorAsignatura[codigoAsignatura];
+            if (listaEstudiantes.some(est => est.documento === documento)) {
+                document.getElementById("resultadoEstudiante").innerText = "El estudiante ya está registrado.";
+                return;
+            }
+
+            listaEstudiantes.push({ nombre, documento });
+            document.getElementById("resultadoEstudiante").innerText = `Estudiante '${nombre}' registrado en la asignatura.`;
+
+            document.getElementById("nombreEstudiante").value = "";
+            document.getElementById("documentoEstudiante").value = "";
+            document.getElementById("codigoAsignaturaEst").value = "";
+        }
+
+        function consultarAsignaturas() {
+            const resultado = document.getElementById("resultadoConsulta");
+            if (asignaturas.length === 0) {
+                resultado.innerText = "No hay asignaturas registradas.";
+                return;
+            }
+
+            let html = "<h3>Asignaturas Registradas:</h3><ul>";
+            asignaturas.forEach(asig => {
+                html += `<li><strong>${asig.codigo}</strong>: ${asig.nombre}</li>`;
+            });
+            html += "</ul>";
+
+            resultado.innerHTML = html;
+        }
+
+        function consultarEstudiantes() {
+            const codigo = prompt("Ingrese el código de la asignatura:");
+            const resultado = document.getElementById("resultadoConsulta");
+
+            if (!codigo || !estudiantesPorAsignatura[codigo]) {
+                resultado.innerText = "Asignatura no encontrada.";
+                return;
+            }
+
+            const lista = estudiantesPorAsignatura[codigo];
+            if (lista.length === 0) {
+                resultado.innerHTML = `<strong>No hay estudiantes registrados en la asignatura ${codigo}.</strong>`;
+                return;
+            }
+
+            let html = `<h3>Estudiantes en la asignatura ${codigo}:</h3><ul>`;
+            lista.forEach(est => {
+                html += `<li>${est.nombre} (Documento: ${est.documento})</li>`;
+            });
+            html += "</ul>";
+
+            resultado.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
+
