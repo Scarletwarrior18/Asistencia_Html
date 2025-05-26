@@ -2,75 +2,182 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Menú Principal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal - Gestión de Asistencia</title>
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-            background-color: #f4f7f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark-color);
         }
-        h1, h2 {
-            color: #2c3e50;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
-        .modulo {
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
         }
-        .modulo h2 {
-            color: #2980b9;
+        
+        h1 {
+            color: var(--secondary-color);
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 600;
         }
-        button {
-            display: table;
-            width: 100%;
-            margin: 8px 0;
-            padding: 10px;
-            background-color: #3498db;
+        
+        .subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .module-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.8rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 4px solid var(--accent-color);
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .module-card h2 {
+            color: var(--secondary-color);
+            margin: 0 0 1rem 0;
+            font-size: 1.4rem;
+        }
+        
+        .module-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 20px;
-            font-size: 15px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-        }
-        button:hover {
-            background-color: #1abc9c;
-        }
-        a {
+            transition: var(--transition);
             text-decoration: none;
-            color: #34495e;
-            font-weight: bold;
+            width: auto;
+            margin-top: 1rem;
         }
-        a:hover {
-            color: #dfdfdf;
+        
+        .module-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>Menú Principal - Sistema de Gestión de Asistencia</h1>
-
-    <div class="modulo">
-        <h2>Departamento</h2>
-        <a href="departamento.html"><button>Ir a Departamento</button></a>
+    <div class="container">
+        <header>
+            <h1>Sistema de Gestión de Asistencia</h1>
+            <p class="subtitle">Administre eficientemente los registros académicos</p>
+        </header>
+        
+        <div class="modules-grid">
+            <div class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h2>Departamento</h2>
+                <p>Gestiona los departamentos académicos de la institución</p>
+                <a href="fronend/departamento.html" class="module-btn">Acceder</a>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h2>Estudiantes</h2>
+                <p>Administra el registro y datos de los estudiantes</p>
+                <a href="fronend/Estudiantes.html" class="module-btn">Acceder</a>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h2>Asignaturas</h2>
+                <p>Gestiona el catálogo de asignaturas y programas</p>
+                <a href="fronend/asignatura.html" class="module-btn">Acceder</a>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-clipboard-check"></i>
+                </div>
+                <h2>Asistencia</h2>
+                <p>Registro y control de asistencia estudiantil</p>
+                <a href="fronend/asistencia.html" class="module-btn">Acceder</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Sistema desarrollado por su institución &copy; 2023</p>
+        </footer>
     </div>
-
-    <div class="modulo">
-        <h2>Estudiantes</h2>
-        <a href="estudiante.html"><button>Ir a Estudiante</button></a>
-    </div>
-
-    <div class="modulo">
-        <h2>Asignaturas</h2>
-        <a href="asignatura.html"><button>Ir a Asignatura</button></a>
-    </div>
-
-    <div class="modulo">
-        <h2>Asistencia</h2>
-        <a href="asistencia.html"><button>Ir a Asistencia</button></a>
-    </div>
-<script src="index.js"></script>
+    
+    <script src="index.js"></script>
 </body>
-
 </html>
-
